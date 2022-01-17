@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+
+  db:
+    image: mysql:latest
+    container_name: "bank-database"
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - bank-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bankproject
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "bank-server"
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  bank-db:
