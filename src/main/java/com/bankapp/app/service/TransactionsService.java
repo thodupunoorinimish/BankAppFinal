@@ -19,7 +19,6 @@ public class TransactionsService {
     public Transactions saveTransactions(Transactions transaction) {
         return transactionRepository.save(transaction);
     }
-
  
 
     public List<Transactions> findAllTransactions(String accountnumber) {

@@ -11,9 +11,9 @@ public interface TransactionRepository extends CrudRepository<Transactions, Inte
 
 	//@Query (value= "select * from Transactions where acc_no= ?1", nativeQuery =true)
 	//List<Transactions> findByName(String account);
-	@Query (value= "select * from Transactions where account_number1= ?1", nativeQuery =true)
+	@Query (value= "select * from transactions where account_number1= ?1", nativeQuery =true)
 	List<Transactions> findByAccountNumber1(String accountnumber);
-	@Query (value= "select * from Transactions where account_number2= ?1", nativeQuery =true)
+	@Query (value= "select * from transactions where account_number2= ?1", nativeQuery =true)
 	List<Transactions> findByAccountNumber2(String accountnumber);
 
 }
