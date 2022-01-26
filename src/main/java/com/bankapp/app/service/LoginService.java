@@ -18,6 +18,7 @@ public class LoginService {
     }
 	
     public String validateLogin(LoginData loginData) {
+
     	boolean exists=userRepository.existsByUsername(loginData.getUserName());
         if(exists)
 		{
