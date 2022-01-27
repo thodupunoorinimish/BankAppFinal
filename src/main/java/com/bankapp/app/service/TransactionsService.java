@@ -11,16 +11,13 @@ import com.bankapp.app.repository.TransactionRepository;
 
 @Service
 public class TransactionsService {
+
 	@Autowired
     private TransactionRepository transactionRepository;
-
- 
 
     public Transactions saveTransactions(Transactions transaction) {
         return transactionRepository.save(transaction);
     }
-
- 
 
     public List<Transactions> findAllTransactions(String accountnumber) {
     	List<Transactions> transactionList=new ArrayList<Transactions>();

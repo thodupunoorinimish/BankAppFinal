@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bankapp.app.domain.User;
 import com.bankapp.app.service.UserService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class UserController {
@@ -19,28 +22,33 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping("/saveUser")
-	public ResponseEntity<String> userSave(@RequestBody User user) {
+	public ResponseEntity<Object> userSave(@RequestBody User user) {
+
 		String accountNumber=userService.userDetails(user);
+
 		if(accountNumber.equalsIgnoreCase("Invalid"))
 		{
-			return new ResponseEntity<String>("Phonenumber not registered",HttpStatus.BAD_REQUEST);
+			Map<String, Object> error = new HashMap();
+			error.put("status", 500);
+			error.put("message", "Phone number is not registered.");
+			return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
 		}
 		else {
 			user.setAccountnumber(accountNumber);
 			String status=userService.checkUser(user);
 			if(status.equalsIgnoreCase("proceed")) {
-//				status=userService.checkAccount(user);
-//				if(status.equalsIgnoreCase("proceed"))
-//				{
-					userService.saveUser(user);
-					return new ResponseEntity<String>("User Added Successfully",HttpStatus.CREATED);
-//				}
-//				else {
-//					return new ResponseEntity<String>(status,HttpStatus.BAD_REQUEST);
-//				}
+				userService.saveUser(user);
+
+				Map<String, Object> success = new HashMap();
+				success.put("status", 200);
+				success.put("message", "User Added Successfully");
+				return new ResponseEntity(success, HttpStatus.CREATED);
 			}
 			else {
-				return new ResponseEntity<String>(status,HttpStatus.BAD_REQUEST);
+				Map<String, Object> error = new HashMap();
+				error.put("status", 500);
+				error.put("message", status);
+				return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
 			}
 		}
 	}

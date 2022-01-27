@@ -13,33 +13,37 @@ import com.bankapp.app.domain.LoginData;
 import com.bankapp.app.service.HomeService;
 import com.bankapp.app.service.LoginService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class LoginController {
 
 	@Autowired
-    private LoginService loginService;
+	private LoginService loginService;
 	@Autowired
 	private HomeService homeService;
-	
+
 	@PostMapping("/login")
-    public ResponseEntity<Account> checkLogin(@RequestBody LoginData loginData) {
-		
-		Account account;
-		
+	public ResponseEntity<Object> checkLogin(@RequestBody LoginData loginData) {
+
 		String statusMessage=loginService.validateLogin(loginData);
-		
+
 		if(statusMessage.equalsIgnoreCase("proceed"))
 		{
-			account=homeService.getMyAccount(loginData);
-			return new ResponseEntity<Account>(account,HttpStatus.OK);
+			Map<String, Object> success = new HashMap();
+			success.put("status", 200);
+			success.put("account", homeService.getMyAccount(loginData));
+			return new ResponseEntity(success, HttpStatus.OK);
 		}
 		else {
-			account=new Account();
-			account.setStatusMessage(statusMessage);
-			return new ResponseEntity<Account>(account,HttpStatus.BAD_REQUEST);
-		}  
-    }
+			Map<String, Object> error = new HashMap();
+			error.put("status", 500);
+			error.put("message", statusMessage);
+			return new ResponseEntity(error,HttpStatus.BAD_REQUEST);
+		}
+	}
 }
 
 
