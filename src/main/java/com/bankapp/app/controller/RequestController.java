@@ -104,7 +104,7 @@ public class RequestController {
             return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
         }
 
-        if (body.getAccountNumber() != request.getToAccount()) {
+        if (!body.getAccountNumber().equals(request.getToAccount())) {
             response.put("status", 500);
             response.put("message", "Access denied.");
             return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
