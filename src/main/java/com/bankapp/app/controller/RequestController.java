@@ -60,7 +60,7 @@ public class RequestController {
 
         Map<String, Object> response = new HashMap();
 
-        if (data instanceof String) {
+        if (data instanceof Error) {
             response.put("status", 500);
             response.put("message", data);
             return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
