@@ -1,7 +1,6 @@
 package com.bankapp.app.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bankapp.app.domain.Transactions;
-import com.bankapp.app.service.HomeService;
 import com.bankapp.app.service.TransactionsService;
 
 
@@ -21,15 +19,13 @@ public class TransactionController {
 
 	@Autowired
     private TransactionsService transactionService;
-   @Autowired
-   private HomeService homeService;
+
     //Transaction Handlers
     
     public void addTransactions(int amount,String senderAccountnumber,String reciverAccountnumber)
     {
         Transactions receiverTransaction=new Transactions(amount,senderAccountnumber,reciverAccountnumber);
         transactionService.saveTransactions(receiverTransaction);
-        
    }
     
    

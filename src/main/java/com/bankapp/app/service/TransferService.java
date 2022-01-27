@@ -20,20 +20,20 @@ public class TransferService {
         return account;
     }
 
-    public String Transfer(String fromAccountNumber, String toAccountNumber, int amount) {
+    public Object Transfer(String fromAccountNumber, String toAccountNumber, int amount) {
         Account senderAccount = accountRepository.findByAccountnumber(fromAccountNumber);
         Account receiverAccount = accountRepository.findByAccountnumber(toAccountNumber);
 
         if (receiverAccount == null) {
-            return "Account Not Found";
+            return new Error("Account Not Found");
         }
 
         if (senderAccount.getAccountnumber() == receiverAccount.getAccountnumber()) {
-            return "Transferring to same account!";
+            return new Error("Transferring to same account!");
         }
 
         if (senderAccount.getBalance() < amount) {
-            return "Insufficient funds";
+            return new Error("Insufficient funds");
         }
 
         receiverAccount.setBalance(receiverAccount.getBalance() + amount);

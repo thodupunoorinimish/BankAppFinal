@@ -42,17 +42,18 @@ public class TransferController {
 
     @RequestMapping("/accountBalance")
     public ResponseEntity<Object> getBalance(@RequestParam String toAccountNumber, @RequestParam int amount, @RequestParam String accountNumber) {
-        String result = transferService.Transfer(accountNumber, toAccountNumber, amount);
-        if (result.equalsIgnoreCase("Transfer Success")) {
-            Map<String, Object> success = new HashMap();
-            success.put("status", 200);
-            success.put("message", result);
-            return new ResponseEntity(success, HttpStatus.OK);
-        } else {
-            Map<String, Object> error = new HashMap();
-            error.put("status", 500);
-            error.put("message", result);
-            return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+        Object result = transferService.Transfer(accountNumber, toAccountNumber, amount);
+
+        Map<String, Object> response = new HashMap();
+
+        if(result instanceof Error) {
+            response.put("status", 500);
+            response.put("message", ((Error) result).getMessage());
+            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
         }
+
+        response.put("status", 200);
+        response.put("message", result);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 }
