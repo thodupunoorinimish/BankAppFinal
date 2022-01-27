@@ -24,8 +24,6 @@ public class LoginService {
 		{
 			User user=userRepository.findByUsername(loginData.getUserName());
 			if(user.getPassword().equals(loginData.getPassword())) {
-            	//accountNumber=user.getAccountnumber();
-            	//accountInfo=accountRepository.findByAccountnumber(accountNumber);
                 return "proceed";
             }
             else {
