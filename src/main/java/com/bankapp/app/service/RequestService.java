@@ -40,12 +40,28 @@ public class RequestService {
         return requests;
     }
 
+    public Object getAllDeclinedRequests(String accountNumber) {
+        Account userAccount = accountRepository.findByAccountnumber(accountNumber);
+
+        if(userAccount == null) {
+            return new Error("Account not found");
+        }
+
+        List<Requests> requests =  requestRepository.getAllDeclinedRequests(userAccount.getAccountnumber());
+        return requests;
+    }
+
     public Requests getRequest(int requestId) {
         return requestRepository.getRequestDetails(requestId);
     }
 
     public void setRequestPaid(Requests request) {
-        request.setStatus(true);
+        request.setStatus("COMPLETED");
+        requestRepository.save(request);
+    }
+
+    public void setRequestDeclined(Requests request) {
+        request.setStatus("DECLINED");
         requestRepository.save(request);
     }
 

@@ -92,6 +92,64 @@ public class RequestController {
     }
 
 
+    @GetMapping(value = "requests/declined")
+    public ResponseEntity<Object> getAllDeclinedRequests(@RequestParam String accountNumber) {
+
+        Object data = requestService.getAllDeclinedRequests(accountNumber);
+
+        Map<String, Object> response = new HashMap();
+
+        if (data instanceof Error) {
+            response.put("status", 500);
+            response.put("message", ((Error) data).getMessage());
+            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+        }
+
+        response.put("status", 200);
+        response.put("requests", data);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "requests/decline")
+    public ResponseEntity<Object> declinedRequest(@RequestBody RequestPayInput body) {
+
+        Requests request = requestService.getRequest(body.getRequestId());
+
+        Map<String, Object> response = new HashMap();
+
+        if (request == null) {
+            response.put("status", 500);
+            response.put("message", "Request not found.");
+            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+        }
+
+        if (!body.getAccountNumber().equals(request.getToAccount())) {
+            response.put("status", 500);
+            response.put("message", "Access denied.");
+            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+        }
+
+        if (request.getStatus().equals("COMPLETED")) {
+            response.put("status", 500);
+            response.put("message", "Request has been already paid, cannot decline.");
+            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+        }
+
+
+        if (request.getStatus().equals("DECLINED")) {
+            response.put("status", 500);
+            response.put("message", "Request already declined.");
+            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+        }
+
+        requestService.setRequestDeclined(request);
+
+        response.put("status", 200);
+        response.put("message", "Request Declined.");
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+
     @PostMapping(value = "requests/pay")
     public ResponseEntity<Object> payRequest(@RequestBody RequestPayInput body) {
 
@@ -111,13 +169,21 @@ public class RequestController {
             return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
         }
 
-        if (request.getStatus() == true) {
+        if (request.getStatus().equals("COMPLETED")) {
             response.put("status", 500);
             response.put("message", "Request already paid.");
             return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
         }
 
+        if (request.getStatus().equals("DECLINED")) {
+            response.put("status", 500);
+            response.put("message", "Request has been declined previously.");
+            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+        }
+
         Object transferStatus = transferService.Transfer(request.getToAccount(), request.getFromAccount(), request.getAmount());
+
+        System.out.println(transferStatus);
 
         if (transferStatus instanceof Error) {
             response.put("status", 500);

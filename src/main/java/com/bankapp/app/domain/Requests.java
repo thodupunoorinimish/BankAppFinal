@@ -12,11 +12,11 @@ public class Requests {
     private String fromAccount;
     private String toAccount;
     private int amount;
-    private boolean status;
+    private String status = "PENDING";
 
     public Requests() {}
 
-    public Requests(int requestId, String fromAccount, String toAccount, int amount, Boolean status) {
+    public Requests(int requestId, String fromAccount, String toAccount, int amount, String status) {
         this.requestId = requestId;
         this.fromAccount = fromAccount;
         this.toAccount = toAccount;
@@ -56,11 +56,11 @@ public class Requests {
         this.amount = amount;
     }
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
