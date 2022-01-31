@@ -35,14 +35,10 @@ public class BeneficiaryController {
 			response="Account Not Found";
 			return new ResponseEntity<String>(response,HttpStatus.BAD_REQUEST);
 		} 
-		else if(bene_service.existsByReceiverAccNo(beneficiary.getReceiverAccNo())==false) {
+		else {
 			bene_service.addBeneficiaryList(beneficiary);
 			response= "Beneficiary Added";
 			return new ResponseEntity<String>(response,HttpStatus.OK);
-			}
-		else {
-				response= "Beneficiary already exists";
-				return new ResponseEntity<String>(response,HttpStatus.BAD_REQUEST);
 		}
 	}
 	

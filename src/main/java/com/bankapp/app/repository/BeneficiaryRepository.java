@@ -13,7 +13,6 @@ public interface BeneficiaryRepository extends JpaRepository<Beneficiary, Long> 
 	
 	List<Object> findByMyAccountNumber(String myAccountNumber);
 
-	boolean existsByReceiverAccNo(String receiverAccNo);
 	
 
 

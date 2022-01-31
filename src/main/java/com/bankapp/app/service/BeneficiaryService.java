@@ -27,11 +27,6 @@ public class BeneficiaryService {
 		return bene_repo.findByMyAccountNumber(myAccountNumber);
 	}
 	
-	public boolean existsByReceiverAccNo(String receiverAccNo) {
-		// TODO Auto-generated method stub
-		return bene_repo.existsByReceiverAccNo(receiverAccNo);
-	}
-	
 	public Account getAccount(String accountNumber){
         Account account= acc_repo.findByAccountnumber(accountNumber);
         if(account!=null)
