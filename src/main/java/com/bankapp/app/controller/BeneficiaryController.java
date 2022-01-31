@@ -18,9 +18,8 @@ import com.bankapp.app.domain.Beneficiary;
 import com.bankapp.app.service.BeneficiaryService;
 
 
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin("*")
 public class BeneficiaryController {
 	@Autowired
 	private BeneficiaryService bene_service;
