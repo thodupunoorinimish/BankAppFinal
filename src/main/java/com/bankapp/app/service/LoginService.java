@@ -18,13 +18,12 @@ public class LoginService {
     }
 	
     public String validateLogin(LoginData loginData) {
+
     	boolean exists=userRepository.existsByUsername(loginData.getUserName());
         if(exists)
 		{
 			User user=userRepository.findByUsername(loginData.getUserName());
 			if(user.getPassword().equals(loginData.getPassword())) {
-            	//accountNumber=user.getAccountnumber();
-            	//accountInfo=accountRepository.findByAccountnumber(accountNumber);
                 return "proceed";
             }
             else {
