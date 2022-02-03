@@ -12,11 +12,11 @@ public class LoginData {
 	        this.username = username;
 	        this.password = pass;
 	    }
-	    public String getUserName() {
+	    public String getUsername() {
 	        return username;
 	    }
 
-	    public void setUserName(String userName) {
+	    public void setUsername(String userName) {
 	        this.username = userName;
 	    }
 	    public String getPassword() {

@@ -35,7 +35,9 @@ public class TransferService {
         if (senderAccount.getBalance() < amount) {
             return new Error("Insufficient funds");
         }
-
+        if (senderAccount.getSetLimit() < amount) {
+            return new Error("Limit Exceeded");
+        }
         receiverAccount.setBalance(receiverAccount.getBalance() + amount);
         senderAccount.setBalance(senderAccount.getBalance() - amount);
         accountRepository.save(receiverAccount);
