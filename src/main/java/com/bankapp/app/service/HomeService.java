@@ -30,7 +30,7 @@ public class HomeService {
     
     public Account getMyAccount(LoginData loginData){
     	String accountNumber;
-    	User user=userRepository.findByUsername(loginData.getUserName());
+    	User user=userRepository.findByUsername(loginData.getUsername());
     	accountNumber=user.getAccountnumber();
     	account=accountRepository.findByAccountnumber(accountNumber);
     	return account;

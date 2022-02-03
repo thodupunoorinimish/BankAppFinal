@@ -19,10 +19,10 @@ public class LoginService {
 	
     public String validateLogin(LoginData loginData) {
 
-    	boolean exists=userRepository.existsByUsername(loginData.getUserName());
+    	boolean exists=userRepository.existsByUsername(loginData.getUsername());
         if(exists)
 		{
-			User user=userRepository.findByUsername(loginData.getUserName());
+			User user=userRepository.findByUsername(loginData.getUsername());
 			if(user.getPassword().equals(loginData.getPassword())) {
                 return "proceed";
             }
