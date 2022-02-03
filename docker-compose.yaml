@@ -13,16 +13,16 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=bankproject
 
-#  server:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    container_name: "bank-server"
-#    restart: always
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - db
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "bank-server"
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
 
 volumes:
   bank-db:
