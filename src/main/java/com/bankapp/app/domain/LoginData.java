@@ -25,8 +25,12 @@ public class LoginData {
 	    public void setPassword(String password) {
 	        this.password = password;
 	    }
-	    @Override
-	    public String toString() {
-	        return "LoginData [uname=" + username + ", pass=" + password + "]";
-	    }
+
+	@Override
+	public String toString() {
+		return "LoginData{" +
+				"username='" + username + '\'' +
+				", password='" + password + '\'' +
+				'}';
+	}
 }
