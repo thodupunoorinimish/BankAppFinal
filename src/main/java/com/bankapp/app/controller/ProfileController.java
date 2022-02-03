@@ -86,6 +86,12 @@ public class ProfileController {
             return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @RequestMapping("/setLimit")
+    public String transactionLimit(@RequestParam int limitSet, @RequestParam String accnum){
+        return profileService.transactionLimit(limitSet, accnum);
+    }
+
 }
 
 class getUserRequestData {

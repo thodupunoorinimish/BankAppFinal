@@ -24,4 +24,12 @@ public class ProfileService {
         }
         return "Current Password is not valid";
     }
+
+    public String transactionLimit(int setLimit, String accountNumber) {
+        Account account = accountRepository.findByAccountnumber(accountNumber);
+        account.setSetlimit(setLimit);
+        accountRepository.save(account);
+        return "limit seted";
+    }
+
 }

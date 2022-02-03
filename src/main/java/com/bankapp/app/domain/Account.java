@@ -20,8 +20,18 @@ public class Account {
 	private String email;
 	private String address;
 	private int balance;
-	
-	@Transient 
+
+	private int setlimit;
+
+	public int getSetlimit() {
+		return setlimit;
+	}
+
+	public void setSetlimit(int setlimit) {
+		this.setlimit = setlimit;
+	}
+
+	@Transient
 	private String statusMessage;
 	
 	public String getStatusMessage() {
@@ -77,7 +87,7 @@ public class Account {
 		this.address = address;
 	}
 	public Account(String accountnumber,String name, String phonenumber, String branchname, String ifsccode, String email,
-			String address,int balance, int accountid) {
+			String address,int balance, int accountid, int setlimit) {
 		super();
 		this.accountnumber = accountnumber;
 		this.accountid=accountid;
@@ -88,6 +98,7 @@ public class Account {
 		this.ifsccode = ifsccode;
 		this.email = email;
 		this.address = address;
+		this.setlimit= setlimit;
 	}
 	public int getBalance() {
 		return balance;
