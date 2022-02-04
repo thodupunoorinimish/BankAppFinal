@@ -87,10 +87,25 @@ public class ProfileController {
             return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
         }
     }
+
     @RequestMapping("/setLimit")
-    public String transactionLimit(@RequestParam int limitSet, @RequestParam String accnum){
-        return profileService.transactionLimit(limitSet, accnum);
+    public ResponseEntity<Object> transactionLimit(@RequestParam int limitSet, @RequestParam String accnum) {
+
+        String result = profileService.transactionLimit(limitSet, accnum);
+        if (result.equalsIgnoreCase("limit seted")) {
+            Map<String, Object> success = new HashMap();
+            success.put("status", 200);
+            success.put("message", result);
+            return new ResponseEntity(success, HttpStatus.OK);
+        } else {
+            Map<String, Object> error = new HashMap();
+            error.put("status", 500);
+            error.put("message", result);
+            return new ResponseEntity(error, HttpStatus.BAD_REQUEST);
+        }
     }
+
+
 }
 
 class getUserRequestData {

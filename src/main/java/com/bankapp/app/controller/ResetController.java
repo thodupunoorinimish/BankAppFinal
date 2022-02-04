@@ -21,8 +21,6 @@ public class ResetController {
 	@RequestMapping("/resetPassword")
 	public ResponseEntity<Object> getAccount(@RequestBody ForgotPasswordInput data) {
 
-//		@RequestParam String username, @RequestParam String securityquestion1, @RequestParam String securityquestion2, @RequestParam String newPassword
-
 		String result = resetService.resetPassword(data.username, data.securityquestion1, data.securityquestion2, data.newPassword);
 		
 		if(result.equalsIgnoreCase("Password Updated")) {
