@@ -6,10 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.bankapp.app.service.ResetService;
 
@@ -22,8 +19,11 @@ public class ResetController {
 
 
 	@RequestMapping("/resetPassword")
-	public ResponseEntity<Object> getAccount(@RequestParam String username, @RequestParam String securityquestion1, @RequestParam String securityquestion2, @RequestParam String newPassword) {
-		String result = resetService.resetPassword(username, securityquestion1, securityquestion2, newPassword);
+	public ResponseEntity<Object> getAccount(@RequestBody ForgotPasswordInput data) {
+
+//		@RequestParam String username, @RequestParam String securityquestion1, @RequestParam String securityquestion2, @RequestParam String newPassword
+
+		String result = resetService.resetPassword(data.username, data.securityquestion1, data.securityquestion2, data.newPassword);
 		
 		if(result.equalsIgnoreCase("Password Updated")) {
 			Map<String, Object> success = new HashMap();
@@ -41,4 +41,45 @@ public class ResetController {
 	}
 	
 	
+}
+
+
+class ForgotPasswordInput {
+	String username;
+	String securityquestion1;
+	String securityquestion2;
+	String newPassword;
+
+	@Override
+	public String toString() {
+		return "ForgotPasswordInput{" +
+				"username='" + username + '\'' +
+				", securityquestion1='" + securityquestion1 + '\'' +
+				", securityquestion2='" + securityquestion2 + '\'' +
+				", newPassword='" + newPassword + '\'' +
+				'}';
+	}
+
+	public ForgotPasswordInput(String username, String securityquestion1, String securityquestion2, String newPassword) {
+		this.username = username;
+		this.securityquestion1 = securityquestion1;
+		this.securityquestion2 = securityquestion2;
+		this.newPassword = newPassword;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getSecurityquestion1() {
+		return securityquestion1;
+	}
+
+	public String getSecurityquestion2() {
+		return securityquestion2;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
 }
